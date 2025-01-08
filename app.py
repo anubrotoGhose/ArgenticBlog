@@ -868,7 +868,3 @@ def profile():
         return redirect(url_for("profile"))
 
     return render_template("profile.html", user=user_info)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
