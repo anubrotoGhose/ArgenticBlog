@@ -11,7 +11,6 @@ from flask import (
 )
 from datetime import datetime
 from datetime import timezone
-import sqlite3
 import os
 from supabase import create_client, Client
 from dotenv import load_dotenv
