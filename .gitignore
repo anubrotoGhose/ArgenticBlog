@@ -1,0 +1,4 @@
+blogvenv/
+__pycache__
+.env
+database_handler.ipynb

@@ -1,0 +1,341 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #0077cc;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.post-form {
+    background: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+.post-form button {
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post-form button:hover {
+    background-color: #005fa3;
+}
+
+.posts {
+    margin-top: 1rem;
+}
+
+.post {
+    background: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post h3 {
+    margin: 0 0 0.5rem;
+}
+
+.post p {
+    margin: 0;
+    color: #555;
+}
+
+.login-container {
+    width: 90%; /* Use a percentage for better scaling on small screens */
+    max-width: 400px; /* Retain max width for larger screens */
+    margin: 50px auto; /* Center the container */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    .login-container {
+        margin: 30px auto; /* Reduce margin for smaller screens */
+        padding: 15px; /* Reduce padding for better fit */
+    }
+
+    input {
+        font-size: 13px; /* Slightly smaller font size */
+        padding: 8px; /* Compact padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-container {
+        margin: 20px auto; /* Further reduce margin for very small screens */
+        padding: 10px; /* Adjust padding to fit */
+    }
+
+    input {
+        font-size: 12px; /* Smaller font size for compact display */
+        padding: 6px; /* Minimal padding */
+    }
+}
+
+.login-header {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+label {
+    font-size: 14px;
+    color: #555;
+}
+
+input {
+    width: 95%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+.header-link {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.header-link:hover {
+    color: #000000;
+}
+
+.links {
+    margin-top: 20px;
+}
+
+
+.link {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.profile-photo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .profile-photo {
+        top: 5px; /* Adjust the top margin */
+        right: 5px; /* Adjust the right margin */
+    }
+
+    .profile-img {
+        width: 40px; /* Smaller size for mobile screens */
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .profile-photo {
+        top: 5px;
+        right: 5px;
+    }
+
+    .profile-img {
+        width: 30px; /* Even smaller size for very small screens */
+        height: 30px;
+    }
+}
+
+/* General container styling */
+#profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+#profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+}
+
+#profile-username {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Form styling */
+#profile-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="file"],
+input[type="text"] {
+    width: 96%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#update-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#update-button:hover {
+    background-color: #0056b3;
+}
+
+/* Links styling */
+#profile-links {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#profile-links a {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+#profile-links a:hover {
+    text-decoration: underline;
+}
+
+.datetime {
+    font-size: 0.9rem;
+    color: rgb(255, 255, 255);
+    margin-top: -10px;
+}

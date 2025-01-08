@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="profile-container">
+        <div id="profile-header">
+            <img src="{{ user.profile_photo or '/static/default-avatar.png' }}" alt="Profile Photo" id="profile-photo">
+            <h1 id="profile-username">{{ user.username or 'Username' }}</h1>
+        </div>
+
+        <form id="profile-form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="profile-photo-input">Change Profile Photo:</label>
+                <input type="file" id="profile-photo-input" name="profile_photo">
+            </div>
+
+            <div class="form-group">
+                <label for="username-input">Change Username:</label>
+                <input type="text" id="username-input" name="username" placeholder="Enter new username">
+                {{usnm_msg | safe}}
+            </div>
+
+            <button type="submit" id="update-button">Update Profile</button>
+        </form>
+
+        <div id="profile-links">
+            <a href="/change-password" id="change-password-link">Change Password</a>
+            <a href="/logout" id="logout-link">Logout</a>
+            <a href="/postblog" id="post-blog-link">Post an Article</a>
+            <a href="/author/{{ user.username or 'Username' }}" id="my-posts-link">My Articles</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post['title'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>ArgenticBlog</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/posthistory">Post History</a>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <h2>{{ post['title'] }}</h2>
+            <p class="post-meta">
+                <span>By {{ post['author'] }}</span> |
+                <span>{{ post['PostTimeStamp'] }}</span>
+            </p>
+            <div class="post-content">
+                {{ post['content'] | safe }}
+            </div>
+        </article>
+
+        <section class="comments">
+            <h3>Comments</h3>
+            <!-- Placeholder for comments section -->
+            <p>No comments yet. Be the first to comment!</p>
+        </section>
+
+        <section class="comment-form">
+            <h3>Leave a Comment</h3>
+            <form method="POST" action="/post/{{ post['articleid'] }}/comment">
+                <textarea name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ArgenticBlog. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

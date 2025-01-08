@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Post history -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post History</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<style>
+    .post-title {
+        font-size: 1.5em;
+        /* Increase font size */
+        color: #007BFF;
+        /* Bright blue color for the text */
+        text-decoration: none;
+        /* Remove underline */
+        transition: color 0.3s ease, transform 0.3s ease;
+        /* Smooth transition for hover effects */
+    }
+
+    .post-title:hover {
+        color: #0056b3;
+        /* Darker blue on hover */
+        text-decoration: underline;
+        transform: scale(1.05);
+        /* Slightly enlarge the text on hover */
+    }
+
+    .post-title:active {
+        color: #003d7a;
+        /* Even darker blue when the link is active */
+    }
+</style>
+
+<body>
+    {{ header_content|safe }}
+    <script src="{{ url_for('static', filename='dropdownmenuprofilephoto.js') }}"></script>
+    <div class="container">
+        <h1>Post History</h1>
+        {% if posts and posts|length > 0 %}
+        {% for post in posts %}
+        <div class="post">
+            <a href="/post/{{ post['articleid'] }}" class="post-title">{{ post['title'] }}</a>
+            <p class="post-meta">Posted by {{ post['username'] }} on {{ post['PostTimeStamp'] }}</p>
+            <div class="post-content">
+                {{ (post['content'] or 'No content available')[:200] }}
+                {% if (post['content'] or '')|length > 200 %}...{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No posts available.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

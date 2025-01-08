@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to your CSS file -->
+</head>
+
+<style>
+    .search-container {
+        display: flex;
+        /* Use flexbox for alignment */
+        justify-content: center;
+        /* Center the form */
+        margin: 20px 0;
+        /* Add some margin above and below */
+    }
+
+    .search-container form {
+        display: flex;
+        /* Use flexbox for the form elements */
+        width: 100%;
+        /* Full width */
+        max-width: 600px;
+        /* Limit the maximum width */
+        border: 1px solid #ccc;
+        /* Light border around the form */
+        border-radius: 5px;
+        /* Rounded corners */
+        overflow: hidden;
+        /* Prevent overflow */
+    }
+
+    .search-container input[type="text"] {
+        flex: 1;
+        /* Allow the input to take up available space */
+        padding: 10px;
+        /* Add padding for comfort */
+        border: none;
+        /* Remove default border */
+        outline: none;
+        /* Remove outline on focus */
+        font-size: 16px;
+        /* Increase font size */
+    }
+
+    .search-container button {
+        background-color: #007BFF;
+        /* Blue background */
+        color: white;
+        /* White text */
+        border: none;
+        /* Remove border */
+        padding: 10px 20px;
+        /* Add padding */
+        cursor: pointer;
+        /* Change cursor to pointer */
+        font-size: 16px;
+        /* Increase font size */
+        transition: background-color 0.3s ease;
+        /* Smooth transition for hover effect */
+    }
+
+    .search-container button:hover {
+        background-color: #0056b3;
+        /* Darker blue on hover */
+    }
+
+    .post-title {
+        font-size: 1.5em;
+        /* Increase font size */
+        color: #007BFF;
+        /* Bright blue color for the text */
+        text-decoration: none;
+        /* Remove underline */
+        transition: color 0.3s ease, transform 0.3s ease;
+        /* Smooth transition for hover effects */
+    }
+
+    .post-title:hover {
+        color: #0056b3;
+        /* Darker blue on hover */
+        text-decoration: underline;
+        transform: scale(1.05);
+        /* Slightly enlarge the text on hover */
+    }
+
+    .post-title:active {
+        color: #003d7a;
+        /* Even darker blue when the link is active */
+    }
+</style>
+
+<body>
+    <header>
+        <h1>Search Results</h1>
+        <div class="search-container">
+            <form action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search posts..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="posts">
+            {% if posts and posts|length > 0 %}
+            <h2>Results for "{{ request.args.get('query') }}"</h2>
+            {% for post in posts %}
+            <div class="post">
+                <a href="/post/{{ post['articleid'] }}" class="post-title">{{ post['title'] }}</a>
+                <p class="post-meta">Posted by {{ post['username'] }} on {{ post['PostTimeStamp'] }}</p>
+                <div class="post-content">
+                    {{ (post['content'] or 'No content available')[:200] }}
+                    {% if (post['content'] or '')|length > 200 %}...{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No results found for "{{ request.args.get('query') }}".</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

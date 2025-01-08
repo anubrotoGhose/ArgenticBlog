@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Blog</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .editor-container {
+            border: 1px solid #ccc;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .toolbar {
+            padding: 10px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #ccc;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .toolbar button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .toolbar button:hover {
+            background: #e9ecef;
+        }
+
+        .toolbar button.active {
+            background-color: #e0e0e0;
+            border-color: #ced4da;
+        }
+
+        .toolbar select {
+            margin: 0 5px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .editor {
+            padding: 20px;
+            min-height: 300px;
+            outline: none;
+            background: white;
+            border-radius: 0 0 4px 4px;
+        }
+
+        #editor {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 200px;
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            cursor: nwse-resize;
+            position: relative;
+        }
+
+        .resizer {
+            width: 10px;
+            height: 10px;
+            background: red;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            cursor: nwse-resize;
+        }
+
+        .color-picker,
+        .bg-color-picker {
+            width: 30px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        #postForm {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #title {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    {{ header_content|safe }}
+    <br>
+    <script src="{{ url_for('static', filename='dropdownmenuprofilephoto.js') }}"></script>
+    <form id="postForm">
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+    
+        <div class="editor-container">
+            <div class="toolbar">
+                <button type="button" data-command="bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
+                <button type="button" data-command="italic" title="Italic"><em>I</em></button>
+                <select data-command="fontSize" title="Font Size">
+                    <option value="1">Small</option>
+                    <option value="2">Normal</option>
+                    <option value="3">Large</option>
+                    <option value="4">Extra Large</option>
+                </select>
+                <button type="button" data-command="underline" title="Underline"><u>U</u></button>
+                <button type="button" data-command="strikethrough" title="Strike"><strike>S</strike></button>
+                <button type="button" data-command="insertImage" title="Insert Image">Image</button>
+    
+                <select data-command="formatBlock">
+                    <option value="p">Paragraph</option>
+                    <option value="h1">Heading 1</option>
+                    <option value="h2">Heading 2</option>
+                    <option value="h3">Heading 3</option>
+                </select>
+    
+                <button type="button" data-command="justifyLeft">Left</button>
+                <button type="button" data-command="justifyCenter">Center</button>
+                <button type="button" data-command="justifyRight">Right</button>
+    
+                <button type="button" data-command="insertUnorderedList">Bullet List</button>
+                <button type="button" data-command="insertOrderedList">Number List</button>
+    
+                <input type="color" class="color-picker" data-command="foreColor" title="Text Color">
+                <input type="color" class="bg-color-picker" data-command="backColor" title="Background Color">
+            </div>
+            <div class="editor" id="editor" contenteditable="true"></div>
+        </div>
+    
+        <button type="submit">Save Post</button>
+    </form>
+
+    <script>
+        class CustomEditor {
+            constructor(editorId) {
+                this.editor = document.getElementById(editorId);
+                this.toolbar = document.querySelector('.toolbar');
+                this.initializeToolbar();
+                this.setupEventListeners();
+            }
+    
+            initializeToolbar() {
+                this.toolbar.querySelectorAll('button[data-command], select[data-command]')
+                    .forEach(item => {
+                        item.addEventListener('click', (e) => {
+                            const command = item.dataset.command;
+                            if (command === 'insertImage') {
+                                this.insertImage();
+                            } else if (command === 'fontSize') {
+                                const size = item.value;
+                                document.execCommand('fontSize', false, size);
+                                // Adjust the font size to match the selected option
+                                const fontSizeElements = this.editor.querySelectorAll('font[size="' + size + '"]');
+                                fontSizeElements.forEach(el => {
+                                    el.removeAttribute('size'); // Remove the size attribute
+                                    el.style.fontSize = size + 'em'; // Set the font size in em
+                                });
+                            } else {
+                                document.execCommand(command, false, null);
+                            }
+                            this.editor.focus();
+                        });
+                    });
+    
+                const formatSelect = this.toolbar.querySelector('select[data-command="formatBlock"]');
+                if (formatSelect) {
+                    formatSelect.addEventListener('change', (e) => {
+                        document.execCommand('formatBlock', false, e.target.value);
+                        this.editor.focus();
+                    });
+                }
+    
+                const colorInputs = this.toolbar.querySelectorAll('input[type="color"]');
+                colorInputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        const command = input.dataset.command;
+                        document.execCommand(command, false, e.target.value);
+                        this.editor.focus();
+                    });
+                });
+            }
+    
+            insertImage() {
+                const imageUrl = prompt("Enter the image URL:");
+                if (imageUrl) {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = "Inserted Image";
+                    img.style.position = 'relative'; // Required for positioning the resizer
+                    this.editor.appendChild(img);
+                    this.addResizer(img); // Add resizer to the inserted image
+                }
+            }
+    
+            addResizer(img) {
+                const resizer = document.createElement('div');
+                resizer.classList.add('resizer');
+                img.parentElement.appendChild(resizer);
+    
+                resizer.style.position = 'absolute'; // Position the resizer
+                resizer.style.width = '10px';
+                resizer.style.height = '10px';
+                resizer.style.background = 'red';
+                resizer.style.bottom = '0';
+                resizer.style.right = '0';
+                resizer.style.cursor = 'nwse-resize'; // Cursor for resizing
+    
+                resizer.addEventListener('mousedown', (e) => {
+                    e.preventDefault(); // Prevent text selection
+                    window.addEventListener('mousemove', startResize);
+                    window.addEventListener('mouseup', stopResize);
+                });
+    
+                const startResize = (e) => {
+                    img.style.width = (e.clientX - img.getBoundingClientRect().left) + 'px';
+                    img.style.height = (e.clientY - img.getBoundingClientRect().top) + 'px';
+                };
+    
+                const stopResize = () => {
+                    window.removeEventListener('mousemove', startResize);
+                    window.removeEventListener('mouseup', stopResize);
+                };
+            }
+    
+            setupEventListeners() {
+                this.editor.addEventListener('keyup', this.updateToolbarState.bind(this));
+                this.editor.addEventListener('mouseup', this.updateToolbarState.bind(this));
+    
+                this.editor.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+                    document.execCommand('insertText', false, text);
+                });
+            }
+    
+            updateToolbarState() {
+                this.toolbar.querySelectorAll('button[data-command]').forEach(button => {
+                    const command = button.dataset.command;
+                    if (document.queryCommandState(command)) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+    
+            getContent() {
+                return this.editor.innerHTML;
+            }
+        }
+    
+        const editor = new CustomEditor('editor');
+    
+        document.getElementById('postForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('content', editor.getContent());
+    
+            fetch('/postblog', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/posthistory';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    
+    </script>
+</body>
+
+</html>
