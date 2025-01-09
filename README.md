@@ -1,6 +1,6 @@
-# IPL-Stats-Explorer
+# ArgenticBlog
 
-In the IPL-Stats-Explorer directory, follow these steps to run the application:
+In the ArgenticBlog directory, follow these steps to run the application:
 
 ## First-Time Setup
 
@@ -39,6 +39,14 @@ In the IPL-Stats-Explorer directory, follow these steps to run the application:
 
   ```
   deactivate
+  ```
+5. Create the .env file
+
+  Set your Supabase environment variables in a dotenv file, or using the shell:
+  
+  ```
+  export SUPABASE_URL="my-url-to-my-awesome-supabase-instance"
+  export SUPABASE_KEY="my-supa-dupa-secret-supabase-api-key"
   ```
 
 
